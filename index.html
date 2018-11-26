@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title></title>
+        <!-- Horizon CSS -->
+        <link href="https://www.principalcdn.com/css/horizon/v2/horizon.min.css" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Application specific CSS -->
+        <!-- Optional favicon and apple/android homescreen icons -->
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="shortcut icon" type="image/x-icon" href="https://www.principalcdn.com/css/horizon/v2/favicon.ico">
+        <link rel="shortcut icon" type="image/x-icon" href="https://www.principalcdn.com/css/horizon/v2/apple-touch-icon.png">
+
+		<title>Realtime communication with WebRTC</title>
+
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+
+<body>
+<nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+			<a class="navbar-principal-brand" href="#"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div style="align:center" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ><a href="#">Realtime communication with WebRTC</a></li>
+           
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+   
+<div >   
+    <video id="remoteVideo" autoplay muted playsinline"></video>
+	
+	<div id="icons1">
+		<button id="endCall" onclick="hangup()" class="btn btn-primary">
+			<i class="material-icons" style="font-size:25px;color:white" title="End call">call_end</i>
+		</button>
+	</div>
+	
+	<div id="icons2">
+		<button id="muteCall" onclick="$(this).find('i').toggleClass('fa fa-microphone fa fa-microphone-slash');" class="btn btn-primary">
+			<i class="fa fa-microphone-slash" style="font-size:27px;color:white" title="Turn-off mic"></i>
+		</button>
+	</div>
+	
+	<div id="icons3">
+		<button id="share_screen" class="btn btn-primary">
+			<i class="material-icons" style="font-size:25px;color:white" title="Share screen">screen_share</i>
+		</button>
+	</div>
+	   
+	<video id="localVideo" autoplay playsinline></video>
+	
+<div class="test col-sm-4" style="margin-left: 30px">
+	
+	<input type="file" onchange="openFile()" id="files"><br>
+    <button id="sendFile" class="btn btn-primary"><i class="material-icons" style="font-size:25px;color:white" title="Send file">send</i></button>
+    <button id = "download" class="btn btn-primary">
+		<i class="material-icons" style="font-size:25px;color:white" title="Click to download">file_download</i>
+	</button><br>
+	
+	<button class="open-button" onclick="openForm()">Chat</button>
+    <div class="chat-popup" id="myForm">
+  <div class="form-container">
+    <h1>Chat</h1>
+
+    <label for="msg"><b>Message</b></label>
+    <textarea placeholder="Type message.." name="msg" id = "send"></textarea>
+
+    <button type="submit" class="btn" id = "sendBtn">Send</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </div>
+</div>
+
+<script>
+function openForm() {
+    document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+}
+</script> 
+	</div>	
+	
+</div>	
+</div>
+</div>  
+ 
+  <!-- This file is automatically added/served when running "node index.js". -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script src="js/main.js"></script>
+  <script src="https://www.principalcdn.com/css/horizon/v2/horizon.min.js"></script>
+  
+  <script language="javascript">
+     navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.getUserMedia;
+     $('#share_screen').click(function() {
+           navigator.getUserMedia({
+                   audio: true,
+                   video: {
+                       mandatory: {
+                           chromeMediaSource: 'screen',
+                           maxWidth: 1280,
+                           maxHeight: 720
+                       },
+                       optional: []
+                   }
+               }, function(stream) {
+                   document.getElementById('localVideo').src = window.URL.createObjectURL(stream);;
+                   $('#share_screen').hide();
+               }, function() {
+                   alert('Error..! Screen stream is not available. Try in latest Chrome with Screen sharing enabled in about:flags.');
+                 }
+           )
+     })
+ </script>
+</body>
+</html>
+  
+</body>
+</html>
